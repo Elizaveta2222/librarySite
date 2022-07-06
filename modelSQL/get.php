@@ -1,7 +1,7 @@
 <?php
 function getGenres($dbconnect)
 {
-    $sql = "SELECT * FROM genre";
+    $sql = "SELECT genre.id as _id, genre.name as name FROM genre";
     $result = mysqli_query($dbconnect, $sql);
     $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $result;
@@ -63,7 +63,7 @@ function addBookToArray($books, $b)
     $books[$b['id']]['year'] = $b['year'];
     $books[$b['id']]['genre'] = $b['genre'];
     $books[$b['id']]['author'][] = array('authorFirst' => $b['authorFirst'], 'authorLast' => $b['authorLast']);
-    $books[$b['id']]['id'] = $b['id'];
+    $books[$b['id']]['_id'] = $b['id'];
     return $books;
 }
 

@@ -2,8 +2,8 @@
 include('../configurationDB.php');
 include($fileNameConnection);
 
-if (isset($_POST["id"]) && isset($_POST["title"]) && isset($_POST["year"])) {
-    $bookid = $_POST["id"];
+if (isset($_POST["_id"]) && isset($_POST["title"]) && isset($_POST["year"])) {
+    $bookid = $_POST["_id"];
 
     require_once ('part.php');
 

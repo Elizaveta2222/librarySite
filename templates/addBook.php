@@ -13,7 +13,7 @@
             $genres = getGenres($dbconnect);
             foreach($genres as $g)
             {
-                $idGen = $g['id'];
+                $idGen = $g['_id'];
                 $nameGen = $g['name'];
                 echo "<option value = '$idGen' >$nameGen</option>";
             }

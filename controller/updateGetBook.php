@@ -1,22 +1,24 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["_id"])) {
     include('../configurationDB.php');
     include($fileNameConnection);
-    $bookid = $_GET["id"];
+    $bookid = $_GET["_id"];
+
     $result = getBookById($dbconnect, $bookid);
+
     if ($result)
     {
         foreach ($result as $book)
         {
             $title = $book["title"];
             $year = $book["year"];
-            $genre = $book["genre"];
+            //$genre = $book["genre"];
 
             $authorFirst = $book["authorFirst"];
             $authorLast = $book["authorLast"];
             echo "<h3>Обновление пользователя</h3>
                 <form method='post' action='http://librarysite/controller/updatePostBook.php'>
-                    <input type='hidden' name='id' value='$bookid' />
+                    <input type='hidden' name='_id' value='$bookid' />
                     <p>Название:
                     <input type='text' name='title' value='$title' /></p>
                     <p>Год:
@@ -27,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["id"])) {
             $genres = getGenres($dbconnect);
             foreach($genres as $g)
             {
-                $idGen = $g['id'];
+                $idGen = $g['_id'];
                 $nameGen = $g['name'];
                 echo "<option value = '$idGen' >$nameGen</option>";
             }

@@ -1,6 +1,7 @@
 <?php
 function updateBook($dbconnect, $id, $title, $year, $genreId, $authors)
 {
+    //var_dump($genreId);
     $id = $dbconnect->real_escape_string($id);
     $genreId = $dbconnect->real_escape_string($genreId);
 

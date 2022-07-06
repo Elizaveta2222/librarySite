@@ -23,7 +23,19 @@
             <td class="elem">
                 <h3>
                     <?php
-                    print ($book['genre']);
+                    if ($SQL)
+                    {
+                        print ($book['genre']);
+                    }
+                    else
+                    {
+                        $genres = getGenres($dbconnect);
+                        foreach($genres as $g)
+                        {
+                            if ($g['_id'] == $book['genre'])
+                            { print $g['name']; }
+                        }
+                    }
                     ?>
                 </h3>
             </td>
@@ -44,12 +56,12 @@
         <tr>
             <td>
                 <?php
-                print $book['id'];
+                print $book['_id'];
                 echo "<td><form action='../controller/deleteBook.php' method='post'>
-                    <input type='hidden' name='id' value='" . $book["id"] . "' />
+                    <input type='hidden' name='_id' value='" . $book["_id"] . "' />
                     <input type='submit' value='Удалить'>
                 </form></td>";
-                echo "<td><a href='updateBook.php?id=" . $book["id"] . "'>Изменить</a></td>";
+                echo "<td><a href='updateBook.php?_id=" . $book["_id"] . "'>Изменить</a></td>";
                 ?>
         </tr>
     </table>
