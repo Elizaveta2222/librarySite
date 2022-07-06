@@ -1,35 +1,20 @@
 <?php
-//require ('include/dbMongo.php');
 
 function getBookBySearch($client, $search = "")
 {
     $genre = $client->library->genre;
     $book = $client->library->book;
-    $cursor = $book->find();
-    $search = strtolower($search);
+
+    $cursor = $book->find([
+        'title' => new \MongoDB\BSON\Regex(preg_quote($search), 'i'),
+    ]);
     $books = array();
 
     foreach ($cursor as $obj)
     {
-        $str1 = $obj['title'];
         $index = new \MongoDB\BSON\ObjectId($obj['genre']);
-
         $g = $genre -> findOne(array('_id' => $index));
-        $str2 = $g['name'];
-
-        if (!empty($search))
-        {
-            if (((strpos(strtolower($str1), $search))===false)&&(strpos(strtolower($str2), $search))===false)
-            {
-            } else
-            {
-                $books = addBookToArray($books, $obj, $g);
-            }
-        }
-        else
-        {
-            $books = addBookToArray($books, $obj, $g);
-        }
+        $books = addBookToArray($books, $obj, $g);
     }
     return $books;
 }
@@ -53,12 +38,10 @@ function addBookToArray($books, $obj, $g)
 
 function getGenres($client)
 {
-    $cursor = $client->library->genre->find();
-    $genres = array();
-    foreach ($cursor as $obj)
-    {
-        $genres[] = array('name' => $obj->name, 'id' => $obj->_id);
-    }
+    $options = ["typeMap" => ['root' => 'array', 'document' => 'array']];
+
+    $genres = $client->library->genre->find([ ], $options)->toArray();
+
     return $genres;
 }
 function getBookById($client, $id)
