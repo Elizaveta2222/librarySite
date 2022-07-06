@@ -11,24 +11,6 @@ function getBookBySearch($client, $search = "")
 
     return $cursor;
 }
-
-function addBookToArray($books, $obj, $g)
-{
-    $id = $obj['_id']->__toString();
-    $books[$id]['title'] = $obj->title;
-    $books[$id]['year'] = $obj->year;
-    $books[$id]['genre'] = $g->name;
-    $books[$id]['_id'] = $obj['_id'];
-
-    $c = 0;
-    foreach ($obj->author as $item)
-    {
-        $books[$id]['author'][$c] = array('authorFirst' => $item->authorFirst, 'authorLast' => $item->authorLast);
-        $c = $c+1;
-    }
-    return $books;
-}
-
 function getGenres($client)
 {
     $options = ["typeMap" => ['root' => 'array', 'document' => 'array']];
